@@ -25,22 +25,39 @@ export default function App() {
         { id: '2', name: 'Jane Smith', email: 'jane.smith@example.com' },
         { id: '3', name: 'Alice Johnson', email: 'alice.johnson@example.com' },
       ]);
+
+      useEffect(() => {
+        // Fetching data from the 'users' collection
+        db.collection('users')
+          .get()
+          .then(querySnapshot => {
+            setUsers(
+              querySnapshot.docs.map(doc => ({
+                ...doc.data(),
+                id: doc.id,
+              }))
+            );
+          })
+          .catch(error => {
+            console.error('Error fetching users:', error);
+          });
+      }, [db, name, email]); //the array at the end will set this useEffect to call when any one of these things changes  
   
     //Add two useState() hooks for name and email here
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
 
     async function saveData() {
       if (db){
         try {
             await db.collection('users').add({
-                //change the following two lines so that
-                //instead of using hard-coded values they
-                //take the values from the useState hooks you have setup
                 name: "Joe Bloggs",
                 email: "joeb@joeb.com",
-                //setEmail(""); //unComment this line when you have added the setEmail hook
-                //setName(""); //unComment this line when you have added the setName hook
+
             });
             alert('Data saved successfully!');
+            setName('');
+            setEmail('');
         } catch (err) {
             alert(`Error adding document: ${err.message}`);
             console.error('Error adding document:', err);
@@ -50,15 +67,30 @@ export default function App() {
         alert("nodb");
       }
     };
-    
-    //add two textInputs inside the following View - above the Button
-    //the TextInputs should use onChangetext to set the value for name and email
-    //stored in the useState hooks that you have set up 
-    //the TextInputs should have style={styles.textbox}
+   
     return (
       <View style={{ padding: 20 }}>
 
+          {/* TextInput for Name */}
+          <TextInput 
+            style={styles.textbox} 
+            placeholder="Enter Name" 
+            value={name} 
+            onChangeText={(text) => setName(text)} 
+          />
+
+          {/* TextInput for Email */}
+          <TextInput 
+            style={styles.textbox} 
+            placeholder="Enter Email" 
+            value={email} 
+            onChangeText={(text) => setEmail(text)} 
+          />
+
+
+
         <Button title="Save User" onPress={saveData} />
+        
         <FlatList
             data={users}
             keyExtractor={(item) => item.id}

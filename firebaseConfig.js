@@ -1,18 +1,21 @@
 import firebase from "firebase";
 
-//replace the folling 9 lines with the firebaseConfig variable
-//issued to you during setup by firebase
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDSUfrmadeupapikey-n0YdPUuSEMjig",
-  database: "https://blahblahblah.firebaseapp.com",
-  authDomain: "testfirestore-1234.firebaseapp.com",
-  projectId: "testfirestore-1234",
-  storageBucket: "testfirestore-1234.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:353f5blahblahblahf06f"
+  apiKey: "AIzaSyDsj87DVBUAJcf4mOK3piDmUnjW3gxjGyk",
+  database: "https;//maw7lab-jackoneill03.firebaseapp.com",
+  authDomain: "maw7lab-jackoneill03.firebaseapp.com",
+  projectId: "maw7lab-jackoneill03",
+  storageBucket: "maw7lab-jackoneill03.firebasestorage.app",
+  messagingSenderId: "605931140210",
+  appId: "1:605931140210:web:745547f6513e3a9cf2feeb"
 };
 
-let app;
+const app = initializeApp(firebaseConfig);
 
 if(!firebase.apps.length){
   alert("initialising");
